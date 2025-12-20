@@ -1,0 +1,42 @@
+#include "flying_enemy.hpp"
+
+using biv::FlyingEnemy;
+
+FlyingEnemy::FlyingEnemy(const Coord& top_left, const int width, const int height) 
+	: RectMapMovableAdapter(top_left, width, height), Movable(top_left, width, height, 0, 0.2f) {
+}
+
+biv::Rect FlyingEnemy::get_rect() const noexcept {
+	return {top_left, width, height};
+}
+
+biv::Speed FlyingEnemy::get_speed() const noexcept {
+	return {vspeed, hspeed};
+}
+
+void FlyingEnemy::move_vertically() noexcept {
+	// No gravity
+}
+
+void FlyingEnemy::process_horizontal_static_collision(Rect* obj) noexcept {
+	hspeed = -hspeed;
+	move_horizontally();
+}
+
+void FlyingEnemy::process_mario_collision(Collisionable* mario) noexcept {
+	if (mario->get_speed().v > V_ACCELERATION) {
+		kill();
+	} else {
+		mario->kill();
+	}
+}
+
+void FlyingEnemy::process_vertical_static_collision(Rect* obj) noexcept {
+    if (vspeed > 0) {
+        top_left.y -= vspeed;
+        vspeed = 0;
+    } else if (vspeed < 0) {
+        top_left.y -= vspeed;
+        vspeed = 0;
+    }
+}

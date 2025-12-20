@@ -1,0 +1,37 @@
+#include "third_level.hpp"
+
+using biv::ThirdLevel;
+
+ThirdLevel::ThirdLevel(UIFactory* ui_factory) : GameLevel(ui_factory) {
+	init_data();
+}
+
+bool ThirdLevel::is_final() const noexcept {
+	return true;
+}
+
+biv::GameLevel* ThirdLevel::get_next() {
+	return next;
+}
+
+// ----------------------------------------------------------------------------
+// 									PROTECTED
+// ----------------------------------------------------------------------------
+void ThirdLevel::init_data() {
+	ui_factory->create_mario({39, 10}, 3, 3);
+	
+    ui_factory->create_box({45, 17}, 5, 3);
+    ui_factory->create_full_box({35, 17}, 5, 3);
+
+	ui_factory->create_ship({20, 25}, 40, 2);
+	ui_factory->create_ship({60, 20}, 10, 7);
+	ui_factory->create_ship({80, 25}, 20, 2);
+	ui_factory->create_ship({120, 20}, 10, 7);
+	ui_factory->create_ship({150, 25}, 40, 2);
+	ui_factory->create_ship({210, 20}, 10, 7);
+
+    ui_factory->create_enemy({108, 5}, 3, 2);
+	
+	ui_factory->create_flying_enemy({50, 10}, 3, 2);
+	ui_factory->create_jumping_enemy({90, 20}, 3, 2);
+}
